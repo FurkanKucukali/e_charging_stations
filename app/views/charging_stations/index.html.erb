@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Charging Station</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>E-Charging Station</h1>
+  </header>
+  <main>
+    <section class="hero">
+      <h2>Welcome to E-Charging Station</h2>
+      <p>Charge your electric vehicle with ease.</p>
+      <a href="#about" class="btn">Learn More</a>
+    </section>
+    <div id="map" style="height: 400px; width: 1331px;"></div>
+    <%= javascript_tag do %>
+     var map = L.map('map').setView([51.505, -0.09], 10);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+  }).addTo(map);
+
+  <% @stations.each do |station| %>
+    L.marker([<%= station['AddressInfo']['Latitude'] %>, <%= station['AddressInfo']['Longitude'] %>]).addTo(map)
+      .bindPopup("<b><%= station['AddressInfo']['Title'] %></b><br><%= station['AddressInfo']['AddressLine1'] %>").openPopup();
+  <% end %>
+<% end %>
+    <section id="about" class="about">
+      <h2>About Us</h2>
+      <p>E-Charging Station provides convenient and reliable charging solutions for electric vehicle owners. Our mission is to promote sustainable transportation by offering accessible charging infrastructure.</p>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 E-Charging Station</p>
+  </footer>
+</body>
+</html>
+
+
+
